@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChevronUp, Hexagon } from 'lucide-react';
-import { BeamsBackground } from './BeamsBackground';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -8,11 +7,21 @@ export const Footer: React.FC = () => {
   };
 
   return (
+    <>
+    <style>{`
+      @keyframes sweep {
+        0% { background-position: 200% center; }
+        100% { background-position: -200% center; }
+      }
+      .text-sweep {
+        background-size: 200% auto;
+        animation: sweep 6s linear infinite;
+      }
+    `}</style>
     <footer className="relative bg-transparent pt-24 pb-8 px-4 md:px-8 lg:px-16 overflow-hidden">
       
       {/* Background Component */}
-      <div className="absolute inset-0 z-0 opacity-50">
-        <BeamsBackground />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-accent-start/15 via-[#0A0A0F] to-[#0A0A0F]">
       </div>
       
       {/* Top Part: 4 Columns (From Screenshot 2) */}
@@ -69,9 +78,11 @@ export const Footer: React.FC = () => {
       {/* Middle Part: Massive Typography (From Screenshot 1) */}
       <div className="w-full relative z-10 mb-8 flex justify-center overflow-visible">
         <h1 
-          className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full"
+          className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full text-sweep"
           style={{
-            backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,0.7) 10%, rgba(255,255,255,0.0) 90%)',
+            backgroundImage: 'linear-gradient(110deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.1) 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
+            maskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
             fontFamily: 'Georgia, serif',
             fontStyle: 'italic',
             letterSpacing: '-0.05em'
@@ -98,5 +109,6 @@ export const Footer: React.FC = () => {
       </div>
       
     </footer>
+    </>
   );
 };
