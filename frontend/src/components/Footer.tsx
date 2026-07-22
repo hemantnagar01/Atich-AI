@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
         <h1 
           className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full text-sweep"
           style={{
-            backgroundImage: 'linear-gradient(110deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.1) 100%)',
+            backgroundImage: 'linear-gradient(110deg, rgb(100,100,100) 0%, rgb(100,100,100) 40%, rgb(255,255,255) 50%, rgb(100,100,100) 60%, rgb(100,100,100) 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
             maskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
             fontFamily: 'Georgia, serif',
