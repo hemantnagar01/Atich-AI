@@ -9,6 +9,7 @@ import { ProjectsView } from './components/ProjectsView';
 import { LoadingScreen } from './components/LoadingScreen';
 import { AuthPanel } from './components/AuthPanel';
 import { SharedBlueprintView } from './components/SharedBlueprintView';
+import { Footer } from './components/Footer';
 import { streamBlueprint, refineSections } from './api';
 import { useProjects, type SavedProject } from './hooks/useProjects';
 import { useAuth } from './hooks/useAuth';
@@ -323,6 +324,7 @@ function App() {
               onNavigateProjects={handleNavigateProjects}
             />
             <Hero onStart={handleHeroStart} />
+            <Footer />
           </>
         } />
         
@@ -342,6 +344,7 @@ function App() {
               onPermanentlyDeleteProject={permanentlyDeleteProject}
               onLoadTrash={loadTrash}
             />
+            <Footer />
           </>
         } />
         
