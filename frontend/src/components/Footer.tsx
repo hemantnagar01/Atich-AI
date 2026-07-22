@@ -69,13 +69,16 @@ export const Footer: React.FC = () => {
           maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
         }}
       >
-        {/* The Beams Background (Canvas) */}
-        <div className="absolute inset-0 z-0">
-          <BeamsBackground className="!min-h-0 !h-full !bg-[#0A0A0F]" />
+        {/* Layer 0: The Base Gray Color for the Text */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-neutral-500 to-neutral-800"></div>
+
+        {/* Layer 1: The Beams Background (Canvas) screened over the gray base */}
+        <div className="absolute inset-0 z-10 mix-blend-screen opacity-80">
+          <BeamsBackground className="!min-h-0 !h-full !bg-transparent" />
         </div>
         
-        {/* The Text Mask Layer */}
-        <div className="relative z-10 bg-[#0A0A0F] text-white mix-blend-darken flex items-center justify-center w-full pt-4 pb-8">
+        {/* Layer 2: The Text Mask Layer */}
+        <div className="relative z-20 bg-[#0A0A0F] text-white mix-blend-darken flex items-center justify-center w-full pt-4 pb-8">
           <h1 
             className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-center w-full"
             style={{
