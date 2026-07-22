@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, Linkedin, MessageSquare, Youtube, Twitter, ChevronUp, Hexagon } from 'lucide-react';
+import { Globe, Hash, MessageSquare, Tv, Radio, ChevronUp, Hexagon } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -22,11 +22,11 @@ export const Footer: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-4 text-white">
-            <a href="#" className="hover:text-accent-start transition-colors"><Instagram className="w-5 h-5" /></a>
-            <a href="#" className="hover:text-accent-start transition-colors"><Linkedin className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-accent-start transition-colors"><Globe className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-accent-start transition-colors"><Hash className="w-5 h-5" /></a>
             <a href="#" className="hover:text-accent-start transition-colors"><MessageSquare className="w-5 h-5" /></a>
-            <a href="#" className="hover:text-accent-start transition-colors"><Youtube className="w-5 h-5" /></a>
-            <a href="#" className="hover:text-accent-start transition-colors"><Twitter className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-accent-start transition-colors"><Tv className="w-5 h-5" /></a>
+            <a href="#" className="hover:text-accent-start transition-colors"><Radio className="w-5 h-5" /></a>
           </div>
         </div>
 
