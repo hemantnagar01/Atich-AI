@@ -60,9 +60,9 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Middle Part: Massive Typography (From Screenshot 1) */}
-      <div className="max-w-7xl mx-auto w-full relative z-0 mb-8 flex justify-center overflow-visible">
+      <div className="w-full relative z-0 mb-8 flex justify-center overflow-visible">
         <h1 
-          className="text-[20vw] md:text-[180px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full"
+          className="text-[25vw] md:text-[300px] lg:text-[350px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full"
           style={{
             backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,0.7) 10%, rgba(255,255,255,0.0) 90%)',
             fontFamily: 'Georgia, serif',
