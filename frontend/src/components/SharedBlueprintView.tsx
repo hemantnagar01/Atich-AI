@@ -8,9 +8,10 @@ import { BeamsBackground } from './BeamsBackground';
 interface SharedBlueprintViewProps {
   id: string;
   onNavigateHome: () => void;
+  onOpenAuth: () => void;
 }
 
-export function SharedBlueprintView({ id, onNavigateHome }: SharedBlueprintViewProps) {
+export function SharedBlueprintView({ id, onNavigateHome, onOpenAuth }: SharedBlueprintViewProps) {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -44,7 +45,7 @@ export function SharedBlueprintView({ id, onNavigateHome }: SharedBlueprintViewP
     <>
       <BeamsBackground className="fixed inset-0 z-[-1]" />
       <Navbar 
-        onOpenAuth={() => {}} 
+        onOpenAuth={onOpenAuth} 
         onNavigateHome={onNavigateHome}
         onNavigateProjects={() => {}}
       />

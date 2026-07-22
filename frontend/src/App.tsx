@@ -14,10 +14,10 @@ import { useProjects, type SavedProject } from './hooks/useProjects';
 import { useAuth } from './hooks/useAuth';
 
 // A tiny wrapper for SharedBlueprintView to grab the ID from the URL
-function SharedRouteWrapper({ onNavigateHome }: { onNavigateHome: () => void }) {
+function SharedRouteWrapper({ onNavigateHome, onOpenAuth }: { onNavigateHome: () => void, onOpenAuth: () => void }) {
   const { id } = useParams<{id: string}>();
   if (!id) return null;
-  return <SharedBlueprintView id={id} onNavigateHome={onNavigateHome} />;
+  return <SharedBlueprintView id={id} onNavigateHome={onNavigateHome} onOpenAuth={onOpenAuth} />;
 }
 
 function App() {
@@ -313,7 +313,7 @@ function App() {
       <LoadingScreen />
       
       <Routes>
-        <Route path="/shared/:id" element={<SharedRouteWrapper onNavigateHome={handleNavigateHome} />} />
+        <Route path="/shared/:id" element={<SharedRouteWrapper onNavigateHome={handleNavigateHome} onOpenAuth={() => setIsAuthOpen(true)} />} />
         
         <Route path="/" element={
           <>
