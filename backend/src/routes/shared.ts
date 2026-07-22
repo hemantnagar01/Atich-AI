@@ -7,6 +7,11 @@ sharedRouter.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     
+    if (!supabaseAdmin) {
+      console.error('Supabase admin client not initialized');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
+
     // Use the admin client to bypass RLS, allowing public access by ID
     const { data, error } = await supabaseAdmin
       .from('blueprints')
