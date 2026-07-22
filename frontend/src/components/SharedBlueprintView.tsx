@@ -18,7 +18,9 @@ export function SharedBlueprintView({ id, onNavigateHome }: SharedBlueprintViewP
   useEffect(() => {
     const fetchShared = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/shared/${id}`);
+        const isProd = import.meta.env.PROD;
+        const apiUrl = import.meta.env.VITE_API_URL || (isProd ? '' : 'http://localhost:3001');
+        const response = await fetch(`${apiUrl}/api/shared/${id}`);
         if (!response.ok) {
           throw new Error('Blueprint not found or inaccessible');
         }
