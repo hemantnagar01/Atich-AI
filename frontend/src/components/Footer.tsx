@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronUp, Hexagon } from 'lucide-react';
+import { BeamsBackground } from './BeamsBackground';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -7,22 +8,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <>
-    <style>{`
-      @keyframes sweep {
-        0% { background-position: 200% center; }
-        100% { background-position: -200% center; }
-      }
-      .text-sweep {
-        background-size: 200% auto;
-        animation: sweep 6s linear infinite;
-      }
-    `}</style>
-    <footer className="relative bg-transparent pt-24 pb-8 px-4 md:px-8 lg:px-16 overflow-hidden">
-      
-      {/* Background Component */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-accent-start/15 via-[#0A0A0F] to-[#0A0A0F]">
-      </div>
+    <footer className="relative bg-[#0A0A0F] pt-24 pb-8 px-4 md:px-8 lg:px-16 overflow-hidden">
       
       {/* Top Part: 4 Columns (From Screenshot 2) */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 md:gap-8 mb-16 md:mb-24 relative z-10">
@@ -76,20 +62,31 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Middle Part: Massive Typography (From Screenshot 1) */}
-      <div className="w-full relative z-10 mb-8 flex justify-center overflow-visible">
-        <h1 
-          className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full text-sweep"
-          style={{
-            backgroundImage: 'linear-gradient(110deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.1) 40%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.1) 60%, rgba(255,255,255,0.1) 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
-            maskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
-            fontFamily: 'Georgia, serif',
-            fontStyle: 'italic',
-            letterSpacing: '-0.05em'
-          }}
-        >
-          atich.ai
-        </h1>
+      <div 
+        className="w-full relative z-10 mb-8 flex justify-center overflow-hidden"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
+        }}
+      >
+        {/* The Beams Background (Canvas) */}
+        <div className="absolute inset-0 z-0">
+          <BeamsBackground className="!min-h-0 !h-full !bg-[#0A0A0F]" />
+        </div>
+        
+        {/* The Text Mask Layer */}
+        <div className="relative z-10 bg-[#0A0A0F] text-white mix-blend-darken flex items-center justify-center w-full pt-4 pb-8">
+          <h1 
+            className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-center w-full"
+            style={{
+              fontFamily: 'Georgia, serif',
+              fontStyle: 'italic',
+              letterSpacing: '-0.05em'
+            }}
+          >
+            atich.ai
+          </h1>
+        </div>
       </div>
 
       {/* Bottom Part: Copyright & Back to Top (From Screenshot 1) */}
@@ -109,6 +106,5 @@ export const Footer: React.FC = () => {
       </div>
       
     </footer>
-    </>
   );
 };
