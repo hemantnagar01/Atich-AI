@@ -150,9 +150,41 @@ export const ExportBar: React.FC<ExportBarProps> = ({ projectName, sections, onS
     setIsSharing(false);
     
     if (url) {
-      navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      try {
+        // navigator.clipboard only works on localhost or HTTPS.
+        // On an AWS HTTP IP, it will fail, so we need a fallback.
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(url);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } else {
+          // Fallback for insecure contexts (HTTP)
+          const textArea = document.createElement("textarea");
+          textArea.value = url;
+          
+          // Move outside of screen to make it invisible
+          textArea.style.position = "absolute";
+          textArea.style.left = "-999999px";
+          
+          document.body.appendChild(textArea);
+          textArea.select();
+          
+          try {
+            document.execCommand("copy");
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          } catch (err) {
+            console.error('Fallback copy failed', err);
+            // If all automated copying fails, show it to the user so they can copy it manually
+            prompt("Your browser blocked automatic copying. Copy the link below:", url);
+          } finally {
+            textArea.remove();
+          }
+        }
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        prompt("Your browser blocked automatic copying. Copy the link below:", url);
+      }
     }
   };
 
