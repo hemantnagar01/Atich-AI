@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChevronUp, Hexagon } from 'lucide-react';
+import { BeamsBackground } from './BeamsBackground';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -7,7 +8,12 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#0A0A0F] pt-24 pb-8 px-4 md:px-8 lg:px-16 border-t border-border/50 relative overflow-hidden">
+    <footer className="relative bg-[#0A0A0F] pt-24 pb-8 px-4 md:px-8 lg:px-16 border-t border-border/50 overflow-hidden">
+      
+      {/* Background Component */}
+      <div className="absolute inset-0 z-0 opacity-50">
+        <BeamsBackground />
+      </div>
       
       {/* Top Part: 4 Columns (From Screenshot 2) */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 md:gap-8 mb-16 md:mb-24 relative z-10">
@@ -37,7 +43,10 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Col 2: ABOUT */}
+        {/* Col 2: Spacer */}
+        <div className="hidden md:block w-full md:w-auto flex-1"></div>
+
+        {/* Col 3: ABOUT (Moved to where Company was) */}
         <div className="flex flex-col gap-4 w-full md:w-auto">
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2">About</h4>
           <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">About Us</a>
@@ -46,8 +55,6 @@ export const Footer: React.FC = () => {
           <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">Pricing and Refund</a>
           <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">Terms and Condition</a>
         </div>
-
-
 
         {/* Col 4: CONTACT */}
         <div className="flex flex-col gap-4 w-full md:w-auto">
@@ -60,9 +67,9 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Middle Part: Massive Typography (From Screenshot 1) */}
-      <div className="w-full relative z-0 mb-8 flex justify-center overflow-visible">
+      <div className="w-full relative z-10 mb-8 flex justify-center overflow-visible">
         <h1 
-          className="text-[25vw] md:text-[300px] lg:text-[350px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full"
+          className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full"
           style={{
             backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,0.7) 10%, rgba(255,255,255,0.0) 90%)',
             fontFamily: 'Georgia, serif',
