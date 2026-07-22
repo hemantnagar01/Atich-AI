@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="relative bg-[#0A0A0F] pt-24 pb-8 px-4 md:px-8 lg:px-16 border-t border-border/50 overflow-hidden">
+    <footer className="relative bg-transparent pt-24 pb-8 px-4 md:px-8 lg:px-16 overflow-hidden">
       
       {/* Background Component */}
       <div className="absolute inset-0 z-0 opacity-50">
