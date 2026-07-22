@@ -25,19 +25,13 @@ RUN npm run build --workspace=backend
 FROM node:20-alpine AS runner
 
 WORKDIR /app
-
 ENV NODE_ENV=production
 
-# Copy necessary files from builder
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/shared ./shared
-COPY --from=builder /app/frontend/dist ./frontend/dist
-COPY --from=builder /app/backend/dist ./backend/dist
-COPY --from=builder /app/backend/package.json ./backend/
+# Copy everything from builder to ensure npm workspaces and node_modules are intact
+COPY --from=builder /app ./
 
-# Expose backend port (this should match your PORT env var)
+# Expose backend port
 EXPOSE 3001
 
-# Start the backend server which also serves the frontend statics
+# Start the backend server
 CMD ["npm", "start", "--workspace=backend"]
