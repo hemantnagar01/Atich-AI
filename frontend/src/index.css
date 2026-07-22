@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background text-text-primary font-sans antialiased min-h-screen selection:bg-accent-start/30;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-surface/80 backdrop-blur-md border border-border rounded-xl;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-start to-accent-end;
+  }
+}
+
+@keyframes spin-gradient {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gradient-border-auto {
+  animation: spin-gradient var(--animation-duration, 4s) linear infinite;
+}
+
+.gradient-border-hover:hover {
+  animation: spin-gradient var(--animation-duration, 4s) linear infinite;
+}
+
+.gradient-border-stop-hover {
+  animation: spin-gradient var(--animation-duration, 4s) linear infinite;
+}
+.gradient-border-stop-hover:hover {
+  animation-play-state: paused;
+}
