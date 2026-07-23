@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Hero } from './components/Hero';
+import { PromptView } from './components/PromptView';
 import { ChatPanel } from './components/ChatPanel';
 import { BlueprintPanel } from './components/BlueprintPanel';
 import { ExportBar } from './components/ExportBar';
@@ -327,6 +328,7 @@ function App() {
             <Footer />
           </>
         } />
+
         
         <Route path="/projects" element={
           <>
