@@ -11,9 +11,51 @@ function getGroqClient() {
     groqInstance = new OpenAI({
       apiKey: process.env.GROQ_API_KEY,
       baseURL: 'https://api.groq.com/openai/v1',
+      maxRetries: 1, // We will handle our own custom rate-limit backoff
     });
   }
   return groqInstance;
+}
+
+// Helper to clean markdown blocks from Mermaid code (```mermaid ... ```)
+function cleanMermaid(obj: any): any {
+  if (typeof obj === 'string') {
+    return obj.replace(/```mermaid\n?/g, '').replace(/```\n?/g, '').trim();
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(cleanMermaid);
+  }
+  if (typeof obj === 'object' && obj !== null) {
+    const newObj: any = {};
+    for (const key in obj) {
+      newObj[key] = cleanMermaid(obj[key]);
+    }
+    return newObj;
+  }
+  return obj;
+}
+
+// Helper for TPM rate limits
+async function retryWithBackoff<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (error: any) {
+      if (error.status === 429 && i < retries - 1) {
+        // Look for 'try again in Xs' in the error message
+        const match = error.message?.match(/try again in ([0-9.]+)s/);
+        let delayMs = 8000; // default 8 seconds
+        if (match && match[1]) {
+          delayMs = Math.ceil(parseFloat(match[1])) * 1000 + 1000; // wait an extra second
+        }
+        console.warn(`[429 Rate Limit] Retrying in ${delayMs}ms... (Attempt ${i + 1} of ${retries})`);
+        await new Promise(r => setTimeout(r, delayMs));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error("Failed after retries");
 }
 
 const MODEL = 'openai/gpt-oss-120b';
@@ -81,7 +123,7 @@ export async function generateSection(sectionName: string, projectName: string, 
   const schema = sectionSchemas[sectionName];
   if (!schema) throw new Error(`Schema not found for section: ${sectionName}`);
 
-  const completion = await getGroqClient().chat.completions.create({
+  const completion = await retryWithBackoff(() => getGroqClient().chat.completions.create({
     model: MODEL,
     messages: [
       { role: 'system', content: `${SYSTEM_PROMPT}\n\nYou are generating the [${sectionName}] section of the blueprint.` },
@@ -95,17 +137,17 @@ export async function generateSection(sectionName: string, projectName: string, 
         schema
       }
     }
-  });
+  }), 4); // up to 4 retries
 
   const content = completion.choices[0]?.message?.content || '{}';
-  return JSON.parse(content);
+  return cleanMermaid(JSON.parse(content));
 }
 
 export async function refineSection(sectionName: string, existingData: any, instruction: string) {
   const schema = sectionSchemas[sectionName];
   if (!schema) throw new Error(`Schema not found for section: ${sectionName}`);
 
-  const completion = await getGroqClient().chat.completions.create({
+  const completion = await retryWithBackoff(() => getGroqClient().chat.completions.create({
     model: MODEL,
     messages: [
       { role: 'system', content: `${SYSTEM_PROMPT}\n\nYou are refining the [${sectionName}] section of the blueprint.` },
@@ -119,10 +161,10 @@ export async function refineSection(sectionName: string, existingData: any, inst
         schema
       }
     }
-  });
+  }), 3);
 
   const content = completion.choices[0]?.message?.content || '{}';
-  return JSON.parse(content);
+  return cleanMermaid(JSON.parse(content));
 }
 
 export async function chatWithBlueprint(chatHistory: any[], blueprintData: any) {

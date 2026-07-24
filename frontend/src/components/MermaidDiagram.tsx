@@ -33,15 +33,15 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, onRetry }
     });
 
     const renderChart = async () => {
+      let cleanChart = chart || '';
       try {
         setError(null);
         // Clean up the chart string just in case it has surrounding markdown
-        let cleanChart = chart.trim();
-        if (cleanChart.startsWith('```mermaid')) {
-          cleanChart = cleanChart.replace(/^```mermaid\n?/, '').replace(/\n?```$/, '');
-        }
-        // Fix any literal \n that might have been double-escaped during DB storage/fetching
+        cleanChart = cleanChart.replace(/```mermaid/g, '').replace(/```/g, '').trim();
+        // Fix any literal \n that might have been double-escaped by the LLM
         cleanChart = cleanChart.replace(/\\n/g, '\n');
+        // Fix any literal \" that might have been double-escaped by the LLM
+        cleanChart = cleanChart.replace(/\\"/g, '"');
 
         const id = `mermaid-${uuidv4()}`;
         const { svg } = await mermaid.render(id, cleanChart);
@@ -49,6 +49,8 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, onRetry }
       } catch (err: any) {
         console.error("Mermaid parsing error:", err);
         setError("Failed to render diagram. The AI may have generated invalid Mermaid syntax.");
+        // We set the cleaned chart content so the fallback <pre> tag shows it properly
+        setSvgContent(cleanChart); 
       }
     };
 
@@ -59,8 +61,11 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, onRetry }
 
   if (error) {
     return (
-      <div className="p-4 border border-red-500/30 bg-red-500/10 rounded-lg flex flex-col items-start gap-3 text-sm text-red-200">
-        <div>{error}</div>
+      <div className="p-4 border border-red-500/30 bg-red-500/10 rounded-lg flex flex-col items-start gap-3 text-sm text-red-200 w-full overflow-x-auto">
+        <div className="font-semibold">{error}</div>
+        <pre className="text-xs bg-black/40 p-3 rounded text-red-300 w-full whitespace-pre-wrap font-mono border border-red-500/20">
+          {svgContent || chart}
+        </pre>
         {onRetry && (
           <button 
             onClick={onRetry} 

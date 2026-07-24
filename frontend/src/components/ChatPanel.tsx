@@ -16,23 +16,24 @@ interface Question {
   options: string[];
 }
 
-interface ChatMessage {
+export interface ChatMessage {
   type: 'ai' | 'user';
   text: string;
 }
 
-export const ChatPanel: React.FC<ChatPanelProps> = ({ 
+export const ChatPanel: React.FC<ChatPanelProps & { chatHistory: ChatMessage[], setChatHistory: React.Dispatch<React.SetStateAction<ChatMessage[]>> }> = ({ 
   projectName, 
   description, 
   mode = 'clarify', 
   blueprintData,
   onComplete,
-  onBlueprintUpdate
+  onBlueprintUpdate,
+  chatHistory,
+  setChatHistory
 }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(mode === 'clarify');
   const [error, setError] = useState<string | null>(null);
   const [inputValue, setInputValue] = useState('');
@@ -74,6 +75,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({
       });
       setIsTyping(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectName, description, mode, onComplete]);
 
   const handleOptionSelect = (option: string) => {

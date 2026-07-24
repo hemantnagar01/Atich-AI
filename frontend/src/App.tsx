@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Hero } from './components/Hero';
 import { PromptView } from './components/PromptView';
-import { ChatPanel } from './components/ChatPanel';
+import { ChatPanel, type ChatMessage } from './components/ChatPanel';
 import { BlueprintPanel } from './components/BlueprintPanel';
 import { ExportBar } from './components/ExportBar';
 import { Navbar } from './components/Navbar';
@@ -60,6 +60,7 @@ function App() {
   // Blueprint State
   const [sections, setSections] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   
   // To keep answers around for retries
   const [structuredAnswers, setStructuredAnswers] = useState<Record<string, string>>({});
@@ -84,7 +85,13 @@ function App() {
             currentProjectIdRef.current = proj.id;
             setProjectName(proj.projectName);
             setDescription(proj.description);
-            setSections(proj.sections);
+            
+            const loadedSections = { ...proj.sections };
+            const loadedChat = loadedSections._chatHistory || [];
+            delete loadedSections._chatHistory;
+            
+            setSections(loadedSections);
+            setChatHistory(loadedChat);
             setErrors({});
             setProjectState('complete');
             setActiveGeneratingSections([]);
@@ -103,7 +110,7 @@ function App() {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
       
       saveTimeoutRef.current = setTimeout(async () => {
-        const id = await saveProject(currentProjectIdRef.current, projectName, description, sections);
+        const id = await saveProject(currentProjectIdRef.current, projectName, description, { ...sections, _chatHistory: chatHistory });
         if (id && !currentProjectIdRef.current) {
           currentProjectIdRef.current = id;
           // Update URL to the new project ID if we were on /new
@@ -117,7 +124,7 @@ function App() {
     return () => {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     }
-  }, [sections, projectState, projectName, description, user, navigate, location.pathname]);
+  }, [sections, chatHistory, projectState, projectName, description, user, navigate, location.pathname]);
 
   const handleAuthSuccess = () => {
     if (pendingAction) {
@@ -129,7 +136,7 @@ function App() {
   const handleShare = async (): Promise<string | null> => {
     return new Promise((resolve) => {
       const executeShare = async () => {
-        const id = await saveProject(currentProjectIdRef.current, projectName, description, sections);
+        const id = await saveProject(currentProjectIdRef.current, projectName, description, { ...sections, _chatHistory: chatHistory });
         if (id) {
           currentProjectIdRef.current = id;
           if (location.pathname === '/new') {
@@ -266,6 +273,7 @@ function App() {
     setProjectName('');
     setDescription('');
     setSections({});
+    setChatHistory([]);
     setErrors({});
     setStructuredAnswers({});
     setActiveGeneratingSections([]);
@@ -292,7 +300,13 @@ function App() {
     currentProjectIdRef.current = proj.id;
     setProjectName(proj.projectName);
     setDescription(proj.description);
-    setSections(proj.sections);
+
+    const loadedSections = { ...proj.sections };
+    const loadedChat = loadedSections._chatHistory || [];
+    delete loadedSections._chatHistory;
+    
+    setSections(loadedSections);
+    setChatHistory(loadedChat);
     setErrors({});
     setProjectState('complete');
     setActiveGeneratingSections([]);
@@ -323,6 +337,8 @@ function App() {
             blueprintData={sections}
             onComplete={handleChatComplete} 
             onBlueprintUpdate={handleBlueprintUpdate}
+            chatHistory={chatHistory}
+            setChatHistory={setChatHistory}
           />
         </div>
         
