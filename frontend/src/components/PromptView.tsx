@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Paperclip, ChevronDown, Cpu, X, FileText, Image as ImageIcon } from 'lucide-react';
+import { Paperclip, ChevronDown, Cpu, X, FileText, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BorderRotate } from './BorderRotate';
 

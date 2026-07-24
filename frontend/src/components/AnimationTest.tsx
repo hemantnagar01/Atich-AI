@@ -72,7 +72,9 @@ export const AnimationTest: React.FC = () => {
         animate(`.label-${p.id}`, { opacity: 0, x: p.textStartX, y: p.textStartY }, { duration: 0 });
       });
       animate("#spinner-group", { rotate: 0 }, { duration: 0 });
-      animate(".peripheral-circle", { opacity: 0, x: (i) => peripherals[i].offsetX, y: (i) => peripherals[i].offsetY }, { duration: 0 });
+      peripherals.forEach((p) => {
+        animate(`#peripheral-${p.id}`, { opacity: 0, x: p.offsetX, y: p.offsetY }, { duration: 0 });
+      });
       animate("#left-line", { pathLength: 1 }, { duration: 0 });
       animate("#left-arm .corner-circle", { opacity: 1 }, { duration: 0 });
       

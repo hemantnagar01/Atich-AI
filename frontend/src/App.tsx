@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { Hero } from './components/Hero';
-import { PromptView } from './components/PromptView';
 import { ChatPanel, type ChatMessage } from './components/ChatPanel';
 import { BlueprintPanel } from './components/BlueprintPanel';
 import { ExportBar } from './components/ExportBar';
@@ -13,7 +12,6 @@ import { SharedBlueprintView } from './components/SharedBlueprintView';
 import { Footer } from './components/Footer';
 import { WhatWeDo } from './components/WhatWeDo';
 import { BeamsBackground } from './components/BeamsBackground';
-import { AnimationTest } from './components/AnimationTest';
 import { streamBlueprint, refineSections } from './api';
 import { useProjects, type SavedProject } from './hooks/useProjects';
 import { useAuth } from './hooks/useAuth';

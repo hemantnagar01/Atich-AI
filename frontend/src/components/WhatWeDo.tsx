@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Hexagon, Layers, LayoutTemplate, Database, Cloud, ShieldAlert, Route, Lightbulb, Link2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { AnimationTest } from './AnimationTest';
 import { BorderRotate } from './BorderRotate';
-
-const nodesData = [
-  { id: 0, label: "Vision", icon: <Lightbulb className="w-5 h-5" />, hoverX: 250, hoverY: 70, idleX: 180, idleY: 380 },
-  { id: 1, label: "Architecture", icon: <LayoutTemplate className="w-5 h-5" />, hoverX: 377, hoverY: 123, idleX: 230, idleY: 410 },
-  { id: 2, label: "Tech Stack", icon: <Layers className="w-5 h-5" />, hoverX: 430, hoverY: 250, idleX: 320, idleY: 390 },
-  { id: 3, label: "Database", icon: <Database className="w-5 h-5" />, hoverX: 377, hoverY: 377, idleX: 190, idleY: 440 },
-  { id: 4, label: "API Design", icon: <Link2 className="w-5 h-5" />, hoverX: 250, hoverY: 430, idleX: 250, idleY: 460 },
-  { id: 5, label: "AWS Cloud", icon: <Cloud className="w-5 h-5" />, hoverX: 123, hoverY: 377, idleX: 310, idleY: 440 },
-  { id: 6, label: "Risk Analysis", icon: <ShieldAlert className="w-5 h-5" />, hoverX: 70, hoverY: 250, idleX: 140, idleY: 410 },
-  { id: 7, label: "Roadmap", icon: <Route className="w-5 h-5" />, hoverX: 123, hoverY: 123, idleX: 280, idleY: 360 },
-];
 
 interface WhatWeDoProps {
   onGetStartedClick?: () => void;

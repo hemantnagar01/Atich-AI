@@ -101,7 +101,8 @@ export function EnergyRing({
   useFrame((state) => {
     if (mesh.current) {
       mesh.current.rotation.z = state.clock.elapsedTime * 0.5
-      mesh.current.material.opacity = 0.15 + Math.sin(state.clock.elapsedTime * 3) * 0.1
+      const material = mesh.current.material as any
+      material.opacity = 0.15 + Math.sin(state.clock.elapsedTime * 3) * 0.1
     }
   })
 

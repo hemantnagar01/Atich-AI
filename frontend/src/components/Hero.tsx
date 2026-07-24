@@ -1,8 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { BorderRotate } from './BorderRotate';
 import { PromptView } from './PromptView';
 
 interface HeroProps {
@@ -15,9 +12,6 @@ interface HeroProps {
 let hasHeroRenderedOnce = false;
 
 export const Hero: React.FC<HeroProps> = ({ onStart }) => {
-  const navigate = useNavigate();
-  const [isHovered, setIsHovered] = useState(false);
-  
   const isFirstLoad = useRef(!hasHeroRenderedOnce);
   
   useEffect(() => {
