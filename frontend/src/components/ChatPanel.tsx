@@ -46,10 +46,18 @@ export const ChatPanel: React.FC<ChatPanelProps & { chatHistory: ChatMessage[], 
     }
   }, [chatHistory, isTyping]);
 
+  const fetchedRef = useRef(false);
+
   useEffect(() => {
-    if (mode === 'clarify') {
+    // Reset fetchedRef if project name or description changes
+    fetchedRef.current = false;
+  }, [projectName, description]);
+
+  useEffect(() => {
+    if (mode === 'clarify' && !fetchedRef.current) {
       const fetchQuestions = async () => {
         try {
+          fetchedRef.current = true;
           setIsTyping(true);
           const data = await clarifyProject(projectName, description);
           if (data.questions && data.questions.length > 0) {
@@ -76,7 +84,7 @@ export const ChatPanel: React.FC<ChatPanelProps & { chatHistory: ChatMessage[], 
       setIsTyping(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectName, description, mode, onComplete]);
+  }, [projectName, description, mode]);
 
   const handleOptionSelect = (option: string) => {
     if (mode !== 'clarify') return;
