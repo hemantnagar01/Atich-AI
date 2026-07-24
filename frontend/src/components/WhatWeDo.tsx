@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { AnimationTest } from './AnimationTest';
 import { BorderRotate } from './BorderRotate';
+import { CardBody, CardContainer } from "./ui/3d-card";
 
 interface WhatWeDoProps {
   onGetStartedClick?: () => void;
@@ -40,22 +41,27 @@ export const WhatWeDo: React.FC<WhatWeDoProps> = ({ onGetStartedClick }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
           
           {/* Left Side: Typography & Palette Card */}
-          <div className="lg:col-span-5 flex justify-start w-full lg:-ml-4">
+          <div className="lg:col-span-5 flex justify-start w-full lg:-ml-4 relative z-[100]">
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
-              className="w-full max-w-[515px] h-[720px] mx-auto lg:ml-[-1rem] lg:mr-auto relative rounded-[40px] shadow-[0_12px_40px_rgba(0,0,0,0.4)] group"
+              className="w-full max-w-[515px] h-[720px] mx-auto lg:ml-[-1rem] lg:mr-auto relative group"
             >
-              <BorderRotate
-                backgroundColor="transparent"
-                borderWidth={2}
-                borderRadius={40}
-                animationSpeed={4}
-                className="w-full h-full shadow-[0_0_30px_rgba(45,212,191,0.05)] group-hover:shadow-[0_0_40px_rgba(45,212,191,0.15)] transition-shadow"
-              >
-                <div className="w-full h-full rounded-[38px] bg-gradient-to-b from-[#081514] via-[#0a1f1d] to-[#0c302b] flex flex-col items-center pt-6 pb-8 px-8 text-center overflow-hidden relative">
+              <CardContainer className="inter-var w-full h-full ![transform-style:flat]" containerClassName="p-0 m-0 w-full h-full">
+                <CardBody className="w-full h-full relative group/card rounded-[40px] shadow-[0_12px_40px_rgba(0,0,0,0.4)] bg-[#0a1f1d] ![transform-style:flat] [&>*]:![transform-style:flat]">
+                  
+                  {/* Main Card Content */}
+                  <div className="w-full h-full relative">
+                    <BorderRotate
+                      backgroundColor="transparent"
+                      borderWidth={2}
+                      borderRadius={40}
+                      animationSpeed={4}
+                      className="w-full h-full shadow-[0_0_30px_rgba(45,212,191,0.05)] group-hover:shadow-[0_0_40px_rgba(45,212,191,0.15)] transition-shadow"
+                    >
+                      <div className="w-full h-full rounded-[38px] bg-gradient-to-b from-[#081514] via-[#0a1f1d] to-[#0c302b] flex flex-col items-center pt-6 pb-8 px-8 text-center overflow-hidden relative">
                   {/* Inner rim highlight */}
                   <div className="absolute inset-0 rounded-[38px] shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)] pointer-events-none z-20"></div>
 
@@ -164,7 +170,7 @@ export const WhatWeDo: React.FC<WhatWeDoProps> = ({ onGetStartedClick }) => {
                 </div>
 
                 {/* Get Started Button (matching Hero section) */}
-                <div className="flex justify-end w-full relative z-10 pt-2 pr-2">
+                <div className="flex justify-end w-full relative z-50 pt-2 pr-2 pointer-events-auto">
                   <motion.div 
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
@@ -205,8 +211,11 @@ export const WhatWeDo: React.FC<WhatWeDoProps> = ({ onGetStartedClick }) => {
             </div>
           </div>
         </BorderRotate>
-      </motion.div>
-    </div>
+      </div>
+    </CardBody>
+  </CardContainer>
+</motion.div>
+</div>
 
           {/* Right Side: Interactive Node Diagram (Blooming Flower) */}
           <div className="lg:col-span-7 flex flex-col justify-start items-center w-full lg:-mr-12 lg:pl-16">
