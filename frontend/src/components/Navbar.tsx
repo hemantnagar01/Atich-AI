@@ -59,9 +59,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onNavigateHome, onNa
           </div>
           
           {/* Right Side: Links & Auth */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 sm:gap-6">
             {user && (
-              <button onClick={onNavigateProjects} className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">
+              <button onClick={onNavigateProjects} className="hidden sm:block text-sm font-medium text-text-secondary hover:text-text-primary transition-colors">
                 My Blueprints
               </button>
             )}

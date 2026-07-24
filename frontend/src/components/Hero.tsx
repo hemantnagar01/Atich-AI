@@ -30,9 +30,9 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
 
   return (
     <BeamsBackground intensity="medium">
-      <div className="z-10 w-full max-w-3xl flex flex-col items-center text-center px-6">
+      <div className="z-10 w-full max-w-3xl flex flex-col items-center text-center px-4 sm:px-6">
         <motion.h2 
-          className="text-5xl md:text-6xl font-bold tracking-tighter max-w-2xl leading-tight text-white drop-shadow-xl mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter max-w-2xl leading-tight text-white drop-shadow-xl mb-6"
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.0, delay: animationDelay, ease: [0.25, 1, 0.5, 1] }}
@@ -41,7 +41,7 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
         </motion.h2>
         
         <motion.p 
-          className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-medium mb-8 md:mb-12"
+          className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-medium mb-6 sm:mb-8 md:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: animationDelay + 0.4, ease: 'easeOut' }}

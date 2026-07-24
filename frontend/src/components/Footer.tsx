@@ -18,17 +18,17 @@ export const Footer: React.FC = () => {
         animation: sweep 6s linear infinite;
       }
     `}</style>
-    <footer className="relative bg-transparent pt-24 pb-8 px-4 md:px-8 lg:px-16 overflow-hidden">
+    <footer className="relative bg-transparent pt-16 md:pt-24 pb-8 px-4 md:px-8 lg:px-16 overflow-hidden">
       
       {/* Background Component */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-accent-start/15 via-[#0A0A0F] to-[#0A0A0F]">
       </div>
       
-      {/* Top Part: 4 Columns (From Screenshot 2) */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 md:gap-8 mb-16 md:mb-24 relative z-10">
+      {/* Top Part: 2 Columns */}
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-8 mb-12 md:mb-24 relative z-10">
         
         {/* Col 1: Logo & Socials */}
-        <div className="flex flex-col gap-6 w-full md:w-auto">
+        <div className="flex flex-col gap-6 w-full sm:w-auto">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-accent-start rounded-lg flex items-center justify-center transform rotate-12">
               <Hexagon className="w-6 h-6 text-white transform -rotate-12" fill="currentColor" />
@@ -53,20 +53,11 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Col 2: Spacer */}
-        <div className="hidden md:block w-full md:w-auto flex-1"></div>
+        <div className="hidden sm:block flex-1"></div>
 
-        {/* Col 3: ABOUT (Moved to where Company was) */}
-        <div className="flex flex-col gap-4 w-full md:w-auto">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2">About</h4>
-          <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">About Us</a>
-          <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">Support</a>
-          <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">Pricing and Refund</a>
-          <a href="#" className="text-sm text-text-secondary hover:text-white transition-colors">Terms and Condition</a>
-        </div>
 
-        {/* Col 4: CONTACT */}
-        <div className="flex flex-col gap-4 w-full md:w-auto">
+        {/* Col 3: CONTACT */}
+        <div className="flex flex-col gap-4 w-full sm:w-auto">
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2">Contact</h4>
           <p className="text-sm text-text-secondary">Online: 10am - 10pm <span className="text-white">+91 9071433205</span></p>
           <p className="text-sm text-text-secondary">Offline: 11am - 8pm <span className="text-white">+91 9691778470</span></p>
@@ -76,9 +67,9 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Middle Part: Massive Typography (From Screenshot 1) */}
-      <div className="w-full relative z-10 mb-8 flex justify-center overflow-visible">
+      <div className="w-full relative z-10 mb-8 flex justify-center items-center overflow-hidden">
         <h1 
-          className="text-[22vw] md:text-[250px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full text-sweep"
+          className="text-[17vw] sm:text-[22vw] md:text-[200px] lg:text-[280px] font-bold leading-none tracking-tighter text-transparent bg-clip-text select-none text-center w-full text-sweep"
           style={{
             backgroundImage: 'linear-gradient(110deg, rgb(100,100,100) 0%, rgb(100,100,100) 40%, rgb(255,255,255) 50%, rgb(100,100,100) 60%, rgb(100,100,100) 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, black 10%, transparent 90%)',
