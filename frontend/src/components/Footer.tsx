@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronUp, Hexagon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const Footer: React.FC = () => {
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+
+  const handleSocialClick = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    setActiveTooltip(id);
+    setTimeout(() => {
+      setActiveTooltip((prev) => (prev === id ? null : prev));
+    }, 2000);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const socialIcons = [
+    { id: 'youtube', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><polygon points="10 15 15 12 10 9 10 15"/></svg> },
+    { id: 'instagram', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg> },
+    { id: 'facebook', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> },
+    { id: 'discord', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 10c0-1-1.5-2-3-2H11c-1.5 0-3 1-3 2v4c0 1 1.5 2 3 2h2c1.5 0 3-1 3-2v-4z"/><circle cx="10.5" cy="12" r="1"/><circle cx="13.5" cy="12" r="1"/><path d="M6 10V8c0-2.2 1.8-4 4-4h4c2.2 0 4 1.8 4 4v2"/><path d="M6 14v2c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-2"/></svg> }
+  ];
 
   return (
     <>
@@ -36,19 +54,31 @@ export const Footer: React.FC = () => {
             <span className="text-2xl font-bold text-white tracking-tight">Atich</span>
           </div>
           
-          <div className="flex items-center gap-4 text-white">
-            <a href="#" className="hover:text-accent-start transition-colors" title="Youtube">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><polygon points="10 15 15 12 10 9 10 15"/></svg>
-            </a>
-            <a href="#" className="hover:text-accent-start transition-colors" title="Instagram">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-            </a>
-            <a href="#" className="hover:text-accent-start transition-colors" title="Facebook">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-            </a>
-            <a href="#" className="hover:text-accent-start transition-colors" title="Discord">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 10c0-1-1.5-2-3-2H11c-1.5 0-3 1-3 2v4c0 1 1.5 2 3 2h2c1.5 0 3-1 3-2v-4z"/><circle cx="10.5" cy="12" r="1"/><circle cx="13.5" cy="12" r="1"/><path d="M6 10V8c0-2.2 1.8-4 4-4h4c2.2 0 4 1.8 4 4v2"/><path d="M6 14v2c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-2"/></svg>
-            </a>
+          <div className="flex items-center gap-6 text-white">
+            {socialIcons.map((social) => (
+              <div key={social.id} className="relative">
+                <a 
+                  href="#" 
+                  onClick={(e) => handleSocialClick(e, social.id)} 
+                  className="hover:text-accent-start transition-colors block"
+                  title="Coming soon..."
+                >
+                  {social.icon}
+                </a>
+                <AnimatePresence>
+                  {activeTooltip === social.id && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10, x: '-50%' }}
+                      animate={{ opacity: 1, y: 0, x: '-50%' }}
+                      exit={{ opacity: 0, y: 5, x: '-50%' }}
+                      className="absolute bottom-full left-1/2 mb-2 px-2.5 py-1 bg-[#1A1A24] border border-white/10 rounded shadow-xl text-[11px] font-medium text-white/80 whitespace-nowrap z-50 pointer-events-none"
+                    >
+                      Coming soon...
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -59,10 +89,9 @@ export const Footer: React.FC = () => {
         {/* Col 3: CONTACT */}
         <div className="flex flex-col gap-4 w-full sm:w-auto">
           <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2">Contact</h4>
-          <p className="text-sm text-text-secondary">Online: 10am - 10pm <span className="text-white">+91 9071433205</span></p>
-          <p className="text-sm text-text-secondary">Offline: 11am - 8pm <span className="text-white">+91 9691778470</span></p>
+          <p className="text-sm text-text-secondary">24x7 Available</p>
           <a href="mailto:hello@atich.ai" className="text-sm text-text-secondary hover:text-white transition-colors">hello@atich.ai</a>
-          <p className="text-sm text-text-secondary max-w-[200px]">23-B, Sector C Indrapuri, Bhopal (MP), 462023</p>
+          <p className="text-sm text-text-secondary max-w-[200px]">350 Fifth Avenue,<br/>New York, NY 10118</p>
         </div>
       </div>
 

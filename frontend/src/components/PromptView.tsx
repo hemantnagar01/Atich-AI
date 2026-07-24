@@ -18,7 +18,6 @@ function ArrowUpIcon() {
 export const PromptView: React.FC<PromptViewProps> = ({ onStart }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedModel, setSelectedModel] = useState('GPT 5.5');
   const [isModelSelectorOpen, setIsModelSelectorOpen] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   
@@ -71,7 +70,7 @@ export const PromptView: React.FC<PromptViewProps> = ({ onStart }) => {
     }
   };
 
-  const models = ['GPT 5.5', 'Claude 3.5', 'Llama 3'];
+
 
   const showArrow = name.trim() !== '' || description.trim() !== '';
 
@@ -159,7 +158,7 @@ export const PromptView: React.FC<PromptViewProps> = ({ onStart }) => {
                       onClick={(e) => { e.stopPropagation(); setIsModelSelectorOpen(!isModelSelectorOpen); }}
                     >
                       <Cpu className="w-3.5 h-3.5" />
-                      {selectedModel}
+                      Models
                       <ChevronDown className="w-3 h-3 opacity-70" />
                     </button>
 
@@ -169,22 +168,9 @@ export const PromptView: React.FC<PromptViewProps> = ({ onStart }) => {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
-                          className="absolute bottom-full left-0 mb-2 w-40 bg-[#1A1A24] border border-white/10 rounded-xl overflow-hidden shadow-xl z-50"
+                          className="absolute bottom-full left-0 mb-2 w-32 bg-[#1A1A24] border border-white/10 rounded-xl shadow-xl z-50 p-2 flex justify-center items-center"
                         >
-                          {models.map(m => (
-                            <button
-                              key={m}
-                              type="button"
-                              className={`w-full text-left px-4 py-2 text-xs hover:bg-white/5 transition-colors ${selectedModel === m ? 'text-accent-start font-medium' : 'text-white/70'}`}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedModel(m);
-                                setIsModelSelectorOpen(false);
-                              }}
-                            >
-                              {m}
-                            </button>
-                          ))}
+                          <span className="text-xs text-white/70 font-medium">Coming Soon...</span>
                         </motion.div>
                       )}
                     </AnimatePresence>

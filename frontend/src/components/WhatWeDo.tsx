@@ -15,11 +15,15 @@ const nodesData = [
   { id: 7, label: "Roadmap", icon: <Route className="w-5 h-5" />, hoverX: 123, hoverY: 123, idleX: 280, idleY: 360 },
 ];
 
-export const WhatWeDo: React.FC = () => {
+interface WhatWeDoProps {
+  onGetStartedClick?: () => void;
+}
+
+export const WhatWeDo: React.FC<WhatWeDoProps> = ({ onGetStartedClick }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <section className="relative w-full py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden min-h-screen flex items-center justify-center">
+    <section className="relative w-full py-12 lg:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden min-h-screen flex items-center justify-center">
       
       <style>{`
         @keyframes flowDash {
@@ -42,21 +46,18 @@ export const WhatWeDo: React.FC = () => {
         }
       `}</style>
 
-      {/* Decorative background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-accent-start/5 blur-[150px] rounded-full pointer-events-none z-0"></div>
-
       <div className="max-w-7xl mx-auto relative z-10 w-full px-4 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full">
           
           {/* Left Side: Typography & Palette Card */}
-          <div className="lg:col-span-4 flex justify-start w-full lg:-ml-4">
+          <div className="lg:col-span-5 flex justify-start w-full lg:-ml-4">
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
-              className="w-full max-w-[490px] h-[720px] mx-auto lg:ml-[-1rem] lg:mr-auto relative rounded-[40px] shadow-[0_12px_40px_rgba(0,0,0,0.4)] group"
+              className="w-full max-w-[515px] h-[720px] mx-auto lg:ml-[-1rem] lg:mr-auto relative rounded-[40px] shadow-[0_12px_40px_rgba(0,0,0,0.4)] group"
             >
               <BorderRotate
                 backgroundColor="transparent"
@@ -65,14 +66,14 @@ export const WhatWeDo: React.FC = () => {
                 animationSpeed={4}
                 className="w-full h-full shadow-[0_0_30px_rgba(45,212,191,0.05)] group-hover:shadow-[0_0_40px_rgba(45,212,191,0.15)] transition-shadow"
               >
-                <div className="w-full h-full rounded-[38px] bg-gradient-to-b from-[#081514] via-[#0a1f1d] to-[#0c302b] flex flex-col items-center pt-10 pb-8 px-8 text-center overflow-hidden relative">
+                <div className="w-full h-full rounded-[38px] bg-gradient-to-b from-[#081514] via-[#0a1f1d] to-[#0c302b] flex flex-col items-center pt-6 pb-8 px-8 text-center overflow-hidden relative">
                   {/* Inner rim highlight */}
                   <div className="absolute inset-0 rounded-[38px] shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)] pointer-events-none z-20"></div>
 
-                  <div className="relative z-10 w-full flex flex-col h-full pt-4 px-2 pb-2">
+                  <div className="relative z-10 w-full flex flex-col h-full pt-2 px-2 pb-2">
               
               {/* Title */}
-              <h3 className="text-2xl font-bold text-white tracking-widest uppercase mb-6 text-center" style={{ fontFamily: 'Times New Roman, serif' }}>
+              <h3 className="text-3xl font-bold text-white tracking-[0.2em] uppercase mb-8 text-center drop-shadow-[0_4px_12px_rgba(45,212,191,0.4)]" style={{ fontFamily: 'Times New Roman, serif' }}>
                 User Flow
               </h3>
               
@@ -178,6 +179,7 @@ export const WhatWeDo: React.FC = () => {
                   <motion.div 
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
+                    onClick={onGetStartedClick}
                     className="w-[150px] h-[46px] cursor-pointer rounded-full group"
                   >
                     <BorderRotate 
@@ -218,7 +220,7 @@ export const WhatWeDo: React.FC = () => {
     </div>
 
           {/* Right Side: Interactive Node Diagram (Blooming Flower) */}
-          <div className="lg:col-span-8 flex flex-col justify-start items-center w-full lg:-mr-12 lg:pl-24">
+          <div className="lg:col-span-7 flex flex-col justify-start items-center w-full lg:-mr-12 lg:pl-16">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -228,6 +230,16 @@ export const WhatWeDo: React.FC = () => {
             >
               From Idea to Production
             </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-base md:text-lg text-white/60 mb-8 max-w-[450px] text-center font-medium"
+            >
+              Our intelligent engine instantly transforms your requirements into a fully structured, deployment-ready architecture blueprint.
+            </motion.p>
 
             <motion.div 
               initial={{ opacity: 0, x: 30 }}

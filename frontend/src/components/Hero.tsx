@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { BeamsBackground } from './BeamsBackground';
 import { BorderRotate } from './BorderRotate';
 import { PromptView } from './PromptView';
 
@@ -29,7 +28,7 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
   const animationDelay = isFirstLoad.current ? 3.0 : 0;
 
   return (
-    <BeamsBackground intensity="medium">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-20 pb-10">
       <div className="z-10 w-full max-w-3xl flex flex-col items-center text-center px-4 sm:px-6">
         <motion.h2 
           className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter max-w-2xl leading-tight text-white drop-shadow-xl mb-6"
@@ -97,6 +96,6 @@ export const Hero: React.FC<HeroProps> = ({ onStart }) => {
           </div>
         </motion.div>
       </div>
-    </BeamsBackground>
+    </section>
   );
 };

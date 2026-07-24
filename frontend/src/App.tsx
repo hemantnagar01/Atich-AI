@@ -12,6 +12,7 @@ import { AuthPanel } from './components/AuthPanel';
 import { SharedBlueprintView } from './components/SharedBlueprintView';
 import { Footer } from './components/Footer';
 import { WhatWeDo } from './components/WhatWeDo';
+import { BeamsBackground } from './components/BeamsBackground';
 import { AnimationTest } from './components/AnimationTest';
 import { streamBlueprint, refineSections } from './api';
 import { useProjects, type SavedProject } from './hooks/useProjects';
@@ -22,6 +23,23 @@ function SharedRouteWrapper({ onNavigateHome, onOpenAuth }: { onNavigateHome: ()
   const { id } = useParams<{id: string}>();
   if (!id) return null;
   return <SharedBlueprintView id={id} onNavigateHome={onNavigateHome} onOpenAuth={onOpenAuth} />;
+}
+
+function ProtectedRoute({ children, onUnauthorized }: { children: React.ReactNode, onUnauthorized: () => void }) {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      onUnauthorized();
+      navigate('/', { replace: true });
+    }
+  }, [user, loading, navigate, onUnauthorized]);
+
+  if (loading) return null;
+  if (!user) return null;
+  
+  return <>{children}</>;
 }
 
 function App() {
@@ -190,6 +208,18 @@ function App() {
   };
 
   const handleHeroStart = (name: string, desc: string) => {
+    if (!user) {
+      setPendingAction(() => () => {
+         currentProjectIdRef.current = null;
+         setProjectName(name);
+         setDescription(desc);
+         setProjectState('clarifying');
+         navigate('/new');
+      });
+      setIsAuthOpen(true);
+      return;
+    }
+    
     currentProjectIdRef.current = null;
     setProjectName(name);
     setDescription(desc);
@@ -248,6 +278,14 @@ function App() {
       return;
     }
     navigate('/projects');
+  };
+
+  const handleWhatWeDoGetStarted = () => {
+    if (!user) {
+      setIsAuthOpen(true);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleSelectProject = (proj: SavedProject) => {
@@ -326,35 +364,49 @@ function App() {
               onNavigateHome={handleNavigateHome}
               onNavigateProjects={handleNavigateProjects}
             />
-            <Hero onStart={handleHeroStart} />
-            <WhatWeDo />
+            <BeamsBackground intensity="medium">
+              <Hero onStart={handleHeroStart} />
+              <WhatWeDo onGetStartedClick={handleWhatWeDoGetStarted} />
+              
+              {/* Smooth fade transition into the Footer */}
+              <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-b from-transparent to-[#0A0A0F] pointer-events-none z-20" />
+            </BeamsBackground>
             <Footer />
           </>
         } />
 
-        
         <Route path="/projects" element={
-          <>
-            <Navbar 
-              onOpenAuth={() => setIsAuthOpen(true)}
-              onNavigateHome={handleNavigateHome}
-              onNavigateProjects={handleNavigateProjects}
-            />
-            <ProjectsView 
-              projects={projects} 
-              trashedProjects={trashedProjects}
-              onSelectProject={handleSelectProject}
-              onDeleteProject={deleteProject}
-              onRestoreProject={restoreProject}
-              onPermanentlyDeleteProject={permanentlyDeleteProject}
-              onLoadTrash={loadTrash}
-            />
-            <Footer />
-          </>
+          <ProtectedRoute onUnauthorized={() => setIsAuthOpen(true)}>
+            <>
+              <Navbar 
+                onOpenAuth={() => setIsAuthOpen(true)}
+                onNavigateHome={handleNavigateHome}
+                onNavigateProjects={handleNavigateProjects}
+              />
+              <ProjectsView 
+                projects={projects} 
+                trashedProjects={trashedProjects}
+                onSelectProject={handleSelectProject}
+                onDeleteProject={deleteProject}
+                onRestoreProject={restoreProject}
+                onPermanentlyDeleteProject={permanentlyDeleteProject}
+                onLoadTrash={loadTrash}
+              />
+              <Footer />
+            </>
+          </ProtectedRoute>
         } />
         
-        <Route path="/new" element={renderEditor()} />
-        <Route path="/project/:id" element={renderEditor()} />
+        <Route path="/new" element={
+          <ProtectedRoute onUnauthorized={() => setIsAuthOpen(true)}>
+            {renderEditor()}
+          </ProtectedRoute>
+        } />
+        <Route path="/project/:id" element={
+          <ProtectedRoute onUnauthorized={() => setIsAuthOpen(true)}>
+            {renderEditor()}
+          </ProtectedRoute>
+        } />
       </Routes>
 
       {isAuthOpen && (

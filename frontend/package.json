@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
+    "@react-three/fiber": "^9.6.1",
     "@supabase/supabase-js": "^2.110.8",
+    "@types/three": "^0.185.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.2",
     "html2canvas": "^1.4.1",
@@ -22,6 +24,7 @@
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1",
     "tailwind-merge": "^3.6.0",
+    "three": "^0.185.1",
     "uuid": "^14.0.1"
   },
   "devDependencies": {
